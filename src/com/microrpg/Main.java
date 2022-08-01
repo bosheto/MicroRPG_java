@@ -1,5 +1,6 @@
 package com.microrpg;
 
+import com.microrpg.entity.PlayerEntity;
 import com.microrpg.utils.OpenSimplexNoise;
 import com.microrpg.world.Position;
 import com.microrpg.world.chunk.Chunk;
@@ -24,15 +25,18 @@ public class Main {
         Texture2D texture = rTextures.LoadTextureFromImage(image);
         Chunk chunk = new Chunk(new Position(0,0), texture, raylib);
         Chunk chunk1 = new Chunk(new Position(constants.CHUNK_SIZE,0), texture, raylib);
-
+        PlayerEntity player = new PlayerEntity(new Position(0,0));
 
         while(!raylib.core.WindowShouldClose()){
+
+            player.move();
 
             raylib.core.BeginDrawing();
             raylib.core.ClearBackground(Color.BLACK);
 
             chunk.draw();
             chunk1.draw();
+            player.draw(raylib, texture);
             raylib.text.DrawFPS(constants.SCREEN_WIDTH-30,0, Color.RED);
             raylib.core.EndDrawing();
         }
