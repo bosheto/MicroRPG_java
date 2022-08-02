@@ -8,6 +8,7 @@ import com.microrpg.world.chunk.Chunk;
 
 import com.raylib.java.Raylib;
 import com.raylib.java.core.Color;
+import com.raylib.java.core.camera.Camera2D;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.textures.Image;
 import com.raylib.java.textures.Texture2D;
@@ -21,30 +22,48 @@ public class Main {
         // Initialization
         final int SCREEN_WIDTH = constants.SCREEN_WIDTH;
         final int SCREEN_HEIGHT = constants.SCREEN_HEIGHT;
+
         Raylib raylib = new Raylib();
         raylib.core.InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Raylib-J [core] example -- basic window");
         raylib.core.SetTargetFPS(60);
+
+        // Texture loading
         Image image = rTextures.LoadImage("src/assets/SpriteSheet.png");
         Texture2D texture = rTextures.LoadTextureFromImage(image);
 
         // Entity and world creation
-        PlayerEntity player = new PlayerEntity(Position.toWorldPosition(new Vector2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)));
+        PlayerEntity player = new PlayerEntity(Position.toWorldPosition(new Vector2((float)SCREEN_WIDTH / 2, (float)SCREEN_HEIGHT / 2)));
         Overworld world = new Overworld(player.getPos(), texture, 12345, raylib);
 
+        //Camera
+        Camera2D camera = new Camera2D();
+        camera.target = Position.toScreenPosition(player.getPos());
+        camera.offset = new Vector2((float)SCREEN_WIDTH / 2, (float)SCREEN_HEIGHT / 2);
+        camera.rotation = 0.0f;
+        camera.zoom = 1.0f;
 
         while(!raylib.core.WindowShouldClose()){
 
             // Update variables here
             player.move();
+            camera.target = Position.toScreenPosition(player.getPos());
+
 
             // Draw here
+
+            //Raylib draw calls
             raylib.core.BeginDrawing();
             raylib.core.ClearBackground(Color.BLACK);
+            raylib.core.BeginMode2D(camera);
+
+            //User draw calls
+
             world.draw();
-
-
             player.draw(raylib, texture);
-            raylib.text.DrawFPS(constants.SCREEN_WIDTH-30,0, Color.RED);
+
+            // Draw FPS counter
+            raylib.text.DrawFPS((int)(camera.target.x + SCREEN_WIDTH / 2) - 30,(int)camera.target.y - SCREEN_HEIGHT /2 + 20  , Color.PURPLE);
+
             raylib.core.EndDrawing();
         }
 
