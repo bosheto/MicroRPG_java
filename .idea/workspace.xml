@@ -4,6 +4,9 @@
     <list default="true" id="bbd074bd-25fc-477a-b683-e24da41c93c4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/microrpg/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/microrpg/entity/PlayerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/entity/PlayerEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/Overworld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/Overworld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/Position.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,7 +21,9 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <branch-grouping />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -99,5 +104,12 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="chunks" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

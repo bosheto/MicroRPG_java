@@ -1,7 +1,6 @@
 package com.microrpg.entity;
 
 import com.microrpg.world.Position;
-import com.raylib.java.Raylib;
 import com.raylib.java.core.rCore;
 import static com.raylib.java.core.input.Keyboard.*;
 
@@ -9,7 +8,7 @@ import static com.raylib.java.core.input.Keyboard.*;
 public class PlayerEntity extends Entity{
 
     public PlayerEntity(Position pos) {
-        super(pos, 10, 0.1f, 0, 1);
+        super(pos, 10, 0.3f, 0, 1);
     }
 
     public void move() {

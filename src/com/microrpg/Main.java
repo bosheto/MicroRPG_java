@@ -1,10 +1,10 @@
 package com.microrpg;
 
 import com.microrpg.entity.PlayerEntity;
-import com.microrpg.utils.OpenSimplexNoise;
+
 import com.microrpg.world.Overworld;
 import com.microrpg.world.Position;
-import com.microrpg.world.chunk.Chunk;
+
 
 import com.raylib.java.Raylib;
 import com.raylib.java.core.Color;
@@ -32,7 +32,8 @@ public class Main {
         Texture2D texture = rTextures.LoadTextureFromImage(image);
 
         // Entity and world creation
-        PlayerEntity player = new PlayerEntity(Position.toWorldPosition(new Vector2((float)SCREEN_WIDTH / 2, (float)SCREEN_HEIGHT / 2)));
+        PlayerEntity player = new PlayerEntity(Position.toWorldPosition(new Vector2(SCREEN_WIDTH / 2f, SCREEN_HEIGHT / 2f)));
+
         Overworld world = new Overworld(player.getPos(), texture, 12345, raylib);
 
         //Camera
@@ -40,12 +41,13 @@ public class Main {
         camera.target = Position.toScreenPosition(player.getPos());
         camera.offset = new Vector2((float)SCREEN_WIDTH / 2, (float)SCREEN_HEIGHT / 2);
         camera.rotation = 0.0f;
-        camera.zoom = 1.0f;
+        camera.zoom = .5f;
 
         while(!raylib.core.WindowShouldClose()){
 
             // Update variables here
             player.move();
+            world.Update(player.getPos());
             camera.target = Position.toScreenPosition(player.getPos());
 
 
