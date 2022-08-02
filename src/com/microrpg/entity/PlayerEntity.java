@@ -1,6 +1,5 @@
 package com.microrpg.entity;
 
-import com.microrpg.world.Position;
 import com.raylib.java.core.rCore;
 import com.raylib.java.raymath.Vector2;
 

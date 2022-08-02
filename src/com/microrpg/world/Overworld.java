@@ -53,7 +53,6 @@ public class Overworld {
 
     private void GenerateChunk(Position position){
         Chunk newChunk = new Chunk(position, texture, raylib, noiseMap);
-        chunks.add(newChunk);
         mapChunks.put(position, newChunk);
     }
 
@@ -65,16 +64,18 @@ public class Overworld {
         for(int y = -dist; y < dist; y++)
         {
             for(int x = -dist; x < dist; x++){
+                if(x == 0 && y == 0 )
+                    continue;
                 positions.add(position.add(new Position(x * chunkSize, y * chunkSize)));
             }
         }
         return positions;
     }
 
-
      public void Update(Vector2 playerPosition){
         this.playerPosition = playerPosition;
         Position currentChunkPosition = ChunkUtils.PositionInChunk(Position.toWorldPosition(this.playerPosition));
+
         if(playerChunkPosition.equals(currentChunkPosition)){
             return;
         }
@@ -89,9 +90,14 @@ public class Overworld {
      }
 
     public void draw(){
-        for (Chunk chunk : chunks) {
-            chunk.draw();
+        mapChunks.get(playerChunkPosition).DrawTiles();
+        for (Position position : SurroundingPositions(playerChunkPosition)) {
+            mapChunks.get(position).DrawTiles();
         }
+//        for (Chunk chunk : chunks) {
+//            chunk.draw();
+//        }
+
     }
 
 }

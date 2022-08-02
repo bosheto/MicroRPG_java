@@ -25,7 +25,7 @@ public abstract class Tile {
         return tileId;
     }
 
-    public void draw(Raylib raylib, Position position, Texture2D texture){
+    public void Draw(Raylib raylib, Position position, Texture2D texture){
         Rectangle rect = new Rectangle((float)sprite_x * constants.SPRITE_SIZE, (float)sprite_y * constants.SPRITE_SIZE
                 ,(float)constants.SPRITE_SIZE, (float)constants.SPRITE_SIZE);
 

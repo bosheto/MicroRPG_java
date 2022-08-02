@@ -3,7 +3,6 @@ package com.microrpg;
 import com.microrpg.entity.PlayerEntity;
 
 import com.microrpg.world.Overworld;
-import com.microrpg.world.Position;
 
 
 import com.raylib.java.Raylib;
@@ -27,6 +26,7 @@ public class Main {
         raylib.core.InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Raylib-J [core] example -- basic window");
         raylib.core.SetTargetFPS(60);
 
+
         // Texture loading
         Image image = rTextures.LoadImage("src/assets/SpriteSheet.png");
         Texture2D texture = rTextures.LoadTextureFromImage(image);
@@ -41,7 +41,7 @@ public class Main {
         camera.target = player.getPos();
         camera.offset = new Vector2((float)SCREEN_WIDTH / 2, (float)SCREEN_HEIGHT / 2);
         camera.rotation = 0.0f;
-        camera.zoom = .4f;
+        camera.zoom = 1f;
 
         while(!raylib.core.WindowShouldClose()){
 

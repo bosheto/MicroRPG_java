@@ -6,12 +6,16 @@ public class util {
 
     public static Tile GetTileFromId(int id){
         switch (id){
-            case 0:
-                return new GrassTile();
             case 1:
-                return new SandTile();
+                return new GrassTile();
             case 2:
+                return new SandTile();
+            case 3:
                 return new StoneTile();
+            case 4:
+                return new WaterTile();
+            case 5:
+                return new TreeTile();
         }
 
         throw new IllegalArgumentException(String.format(INVALID_ID_MSG, id));
