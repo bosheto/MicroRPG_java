@@ -9,8 +9,8 @@ public class ChunkUtils {
 
         float multiple = constants.CHUNK_SIZE;
         Position pos = new Position(0,0);
-        pos.setX((int)(targetPosition.getX() / multiple) * constants.CHUNK_SIZE);
-        pos.setY((int)(targetPosition.getY() / multiple) * constants.CHUNK_SIZE);
+        pos.setX(Math.round(targetPosition.getX() / multiple) * constants.CHUNK_SIZE);
+        pos.setY(Math.round(targetPosition.getY() / multiple) * constants.CHUNK_SIZE);
         return pos;
 
 

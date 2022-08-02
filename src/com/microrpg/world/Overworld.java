@@ -5,6 +5,7 @@ import com.microrpg.utils.OpenSimplexNoise;
 import com.microrpg.world.chunk.Chunk;
 import com.microrpg.world.chunk.ChunkUtils;
 import com.raylib.java.Raylib;
+import com.raylib.java.raymath.Vector2;
 import com.raylib.java.textures.Texture2D;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.Map;
 public class Overworld {
 
     private long seed;
-    private Position playerPosition;
+    private Vector2 playerPosition;
     private List<Chunk> chunks;
     private Texture2D texture;
 
@@ -26,7 +27,7 @@ public class Overworld {
 
     private OpenSimplexNoise noiseMap;
 
-    public Overworld(Position playerPosition, Texture2D texture, long seed, Raylib raylib) {
+    public Overworld(Vector2 playerPosition, Texture2D texture, long seed, Raylib raylib) {
         this.playerPosition = playerPosition;
         this.texture = texture;
         this.seed = seed;
@@ -38,7 +39,7 @@ public class Overworld {
     }
 
     private void InitializeWorld(){
-        Position spawn_chunk_position = ChunkUtils.PositionInChunk(playerPosition);
+        Position spawn_chunk_position = ChunkUtils.PositionInChunk(Position.toWorldPosition(playerPosition));
         playerChunkPosition = spawn_chunk_position;
         GenerateChunk(spawn_chunk_position);
         for (Position position : SurroundingPositions(spawn_chunk_position)) {
@@ -47,7 +48,7 @@ public class Overworld {
         for (Position position : mapChunks.keySet()) {
             System.out.println(position.toString());
         }
-        System.out.println(ChunkUtils.PositionInChunk(playerPosition).toString());
+        System.out.println(playerPosition.toString());
     }
 
     private void GenerateChunk(Position position){
@@ -56,22 +57,24 @@ public class Overworld {
         mapChunks.put(position, newChunk);
     }
 
-     private Position[] SurroundingPositions(Position position){
-        return new Position[]{
-                position.add(new Position(-constants.CHUNK_SIZE, - constants.CHUNK_SIZE)),
-                position.add(new Position(-constants.CHUNK_SIZE, 0)),
-                position.add(new Position(-constants.CHUNK_SIZE, constants.CHUNK_SIZE)),
-                position.add(new Position(0, constants.CHUNK_SIZE)),
-                position.add(new Position(constants.CHUNK_SIZE, constants.CHUNK_SIZE)),
-                position.add(new Position(constants.CHUNK_SIZE, 0)),
-                position.add(new Position(constants.CHUNK_SIZE, -constants.CHUNK_SIZE)),
-                position.add(new Position(0, -constants.CHUNK_SIZE))
-        };
-     }
+    private List<Position> SurroundingPositions(Position position){
+        int dist = constants.renderDistance;
+        int chunkSize = constants.CHUNK_SIZE;
+        List<Position> positions = new ArrayList<>();
 
-     public void Update(Position playerPosition){
+        for(int y = -dist; y < dist; y++)
+        {
+            for(int x = -dist; x < dist; x++){
+                positions.add(position.add(new Position(x * chunkSize, y * chunkSize)));
+            }
+        }
+        return positions;
+    }
+
+
+     public void Update(Vector2 playerPosition){
         this.playerPosition = playerPosition;
-        Position currentChunkPosition = ChunkUtils.PositionInChunk(this.playerPosition);
+        Position currentChunkPosition = ChunkUtils.PositionInChunk(Position.toWorldPosition(this.playerPosition));
         if(playerChunkPosition.equals(currentChunkPosition)){
             return;
         }

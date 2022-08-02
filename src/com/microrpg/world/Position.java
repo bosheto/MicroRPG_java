@@ -2,24 +2,23 @@ package com.microrpg.world;
 
 import com.microrpg.constants.constants;
 import com.raylib.java.raymath.Vector2;
-import org.lwjgl.system.CallbackI;
 
 import java.util.Objects;
 
 public class Position {
-    private float x;
-    private float y;
+    private int x;
+    private int y;
 
-    public Position(float x, float y) {
+    public Position(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public void setY(float y) {
+    public void setY(int y) {
         this.y = y;
     }
 
-    public void setX(float x) {
+    public void setX(int x) {
         this.x = x;
     }
 
@@ -36,7 +35,7 @@ public class Position {
     }
 
     public static Position toWorldPosition(Vector2 pos){
-        return new Position(pos.x / constants.SPRITE_SIZE, pos.y / constants.SPRITE_SIZE);
+        return new Position(Math.round(pos.x / constants.SPRITE_SIZE), Math.round(pos.y / constants.SPRITE_SIZE));
     }
 
     public static Vector2 toScreenPosition(Position pos){
@@ -58,6 +57,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return String.format("%.5f, %.5f", this.x, this.y);
+        return String.format("%d, %d", this.x, this.y);
     }
 }

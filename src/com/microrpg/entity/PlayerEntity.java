@@ -2,28 +2,30 @@ package com.microrpg.entity;
 
 import com.microrpg.world.Position;
 import com.raylib.java.core.rCore;
+import com.raylib.java.raymath.Vector2;
+
 import static com.raylib.java.core.input.Keyboard.*;
 
 
 public class PlayerEntity extends Entity{
 
-    public PlayerEntity(Position pos) {
-        super(pos, 10, 0.3f, 0, 1);
+    public PlayerEntity(Vector2 pos) {
+        super(pos, 10, 8f, 0, 1);
     }
 
     public void move() {
-        Position new_pos = getPos();
+        Vector2 new_pos = getPos();
         if(rCore.IsKeyDown(KEY_W)){
-            new_pos = new_pos.add(new Position(0, -getSpeed()));
+            new_pos.setY(getPos().y += -getSpeed());
         }
         if(rCore.IsKeyDown(KEY_S)){
-            new_pos = new_pos.add(new Position(0, getSpeed()));
+            new_pos.setY(getPos().y += getSpeed());
         }
         if(rCore.IsKeyDown(KEY_A)){
-            new_pos = new_pos.add(new Position(-getSpeed(), 0));
+            new_pos.setX(getPos().x += -getSpeed());
         }
         if(rCore.IsKeyDown(KEY_D)){
-            new_pos = new_pos.add(new Position(getSpeed(), 0));
+            new_pos.setX(getPos().x += getSpeed());
         }
 
         setPos(new_pos);

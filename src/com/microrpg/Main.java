@@ -32,23 +32,23 @@ public class Main {
         Texture2D texture = rTextures.LoadTextureFromImage(image);
 
         // Entity and world creation
-        PlayerEntity player = new PlayerEntity(Position.toWorldPosition(new Vector2(SCREEN_WIDTH / 2f, SCREEN_HEIGHT / 2f)));
+        PlayerEntity player = new PlayerEntity(new Vector2(SCREEN_WIDTH / 2f, SCREEN_HEIGHT / 2f));
 
         Overworld world = new Overworld(player.getPos(), texture, 12345, raylib);
 
         //Camera
         Camera2D camera = new Camera2D();
-        camera.target = Position.toScreenPosition(player.getPos());
+        camera.target = player.getPos();
         camera.offset = new Vector2((float)SCREEN_WIDTH / 2, (float)SCREEN_HEIGHT / 2);
         camera.rotation = 0.0f;
-        camera.zoom = .5f;
+        camera.zoom = .4f;
 
         while(!raylib.core.WindowShouldClose()){
 
             // Update variables here
             player.move();
             world.Update(player.getPos());
-            camera.target = Position.toScreenPosition(player.getPos());
+            camera.target = player.getPos();
 
 
             // Draw here
