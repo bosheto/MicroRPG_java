@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bbd074bd-25fc-477a-b683-e24da41c93c4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/microrpg/entity/Entity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/microrpg/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/microrpg/constants/constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/constants/constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/chunk/Chunk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/chunk/Chunk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/util.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +27,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2Clelziq5euogsqDUJobzzCvP20" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="false" />
