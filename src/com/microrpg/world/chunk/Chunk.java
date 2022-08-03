@@ -11,10 +11,10 @@ import java.util.Random;
 
 
 public class Chunk {
+
     private Position pos;
     private Texture2D texture;
     private int[][] tiles;
-    private int[][] details;
     private Raylib raylib;
 
     private Random rand;
@@ -27,7 +27,6 @@ public class Chunk {
         this.raylib = raylib;
         rand = new Random();
         tiles = new int[constants.CHUNK_SIZE][constants.CHUNK_SIZE];
-        details = new int[tiles.length][tiles.length];
         this.noiseMap = noiseMap;
         generateChunk();
     }
@@ -43,15 +42,16 @@ public class Chunk {
 
     private void GenerateDetails(int x, int y)
     {
-        int n = rand.nextInt(10);
-        Tile t = util.GetTileFromId(tiles[y][x]);
-        if(t instanceof GroundTile){
-            ((GroundTile) t).setTopTile(new TreeTile());
-
+        int n = rand.nextInt(60);
+        int id = tiles[y][x];
+        Tile t = Tile.TILES[id];
+        if(t instanceof GrassTile){
+            if(n <  10)
+                tiles[y][x] = Tile.TREE_TILE.getTileId();
+            if(n > 40)
+                tiles[y][x] = Tile.SMALL_GRASS_TILE.getTileId();
         }
-
     }
-
 
     private int GenerateTiles(int x, int y){
         double scale = 0.02;
@@ -61,17 +61,18 @@ public class Chunk {
         n+= noiseMap.eval(pos.getX()  * scale2, pos.getY() * scale2) * 0.5;
 
         if(n < -0.5)
-            return util.GetIndexFromTile(new WaterTile());
+            return Tile.WATER_TILE.getTileId();
         if(n > -0.5 && n < 0.5)
-            return util.GetIndexFromTile(new GrassTile());
+            return Tile.GRASS_TILE.getTileId();
         else
-            return  util.GetIndexFromTile(new StoneTile());
+            return Tile.STONE_TILE.getTileId();
     }
 
     public void DrawTiles() {
         for (int y = 0; y < constants.CHUNK_SIZE; y++) {
             for (int x = 0; x < constants.CHUNK_SIZE; x++) {
-                Tile t = util.GetTileFromId(tiles[y][x]);
+                int id = tiles[y][x];
+                Tile t = Tile.TILES[id];
                 Position pos = this.pos.add(new Position(x, y));
                 t.Draw(raylib, pos, texture);
             }

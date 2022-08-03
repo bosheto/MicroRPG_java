@@ -1,7 +1,7 @@
 package com.microrpg.world.tiles;
 
 public class SandTile extends Tile{
-    public SandTile() {
-        super(1, 0, 2);
+    public SandTile(int tileId) {
+        super(1, 0, tileId);
     }
 }

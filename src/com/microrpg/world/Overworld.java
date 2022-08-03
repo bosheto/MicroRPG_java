@@ -45,10 +45,7 @@ public class Overworld {
         for (Position position : SurroundingPositions(spawn_chunk_position)) {
             GenerateChunk(position);
         }
-        for (Position position : mapChunks.keySet()) {
-            System.out.println(position.toString());
-        }
-        System.out.println(playerPosition.toString());
+
     }
 
     private void GenerateChunk(Position position){
@@ -84,7 +81,6 @@ public class Overworld {
                 GenerateChunk(position);
             }
         }
-        System.out.println(currentChunkPosition);
         playerChunkPosition = currentChunkPosition;
 
      }

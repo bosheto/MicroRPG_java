@@ -4,23 +4,21 @@ import com.microrpg.world.Position;
 import com.raylib.java.Raylib;
 import com.raylib.java.textures.Texture2D;
 
-public abstract class GroundTile extends Tile{
+public abstract class DetailTile extends Tile{
 
-    Tile topTile;
+    Tile groundTile;
 
-    public GroundTile(int sprite_x, int sprite_y, int tileId) {
+    public DetailTile(int sprite_x, int sprite_y, int tileId) {
         super(sprite_x, sprite_y, tileId);
     }
 
-    public void setTopTile(Tile topTile) {
-        this.topTile = topTile;
+    public void setGroundTile(Tile groundTile) {
+        this.groundTile = groundTile;
     }
 
     @Override
     public void Draw(Raylib raylib, Position position, Texture2D texture) {
+        groundTile.Draw(raylib, position, texture);
         super.Draw(raylib, position, texture);
-        if(topTile != null){
-            topTile.Draw(raylib, position, texture);
-        }
     }
 }

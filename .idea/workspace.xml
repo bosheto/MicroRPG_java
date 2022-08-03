@@ -3,16 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="bbd074bd-25fc-477a-b683-e24da41c93c4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/SpriteSheet.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/SpriteSheet.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/microrpg/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/microrpg/constants/constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/constants/constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/microrpg/entity/PlayerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/entity/PlayerEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/Overworld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/Overworld.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/chunk/Chunk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/chunk/Chunk.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/GrassTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/GrassTile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/GroundTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/DetailTile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/SandTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/SandTile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/StoneTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/StoneTile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/TreeTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/TreeTile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/WaterTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/WaterTile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/util.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

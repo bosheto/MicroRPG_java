@@ -10,15 +10,31 @@ import com.raylib.java.textures.Texture2D;
 
 public abstract class Tile {
 
+    public static final int TILE_MAX = 256;
+    public static final Tile[] TILES = new Tile[TILE_MAX];
+
+    public static final GrassTile GRASS_TILE = new GrassTile(1);
+    public static final SandTile SAND_TILE = new SandTile(2);
+    public static final StoneTile STONE_TILE = new StoneTile(3);
+    public static final WaterTile WATER_TILE = new WaterTile(4);
+    public static final TreeTile TREE_TILE = new TreeTile(5);
+    public static final SmallGrassTile SMALL_GRASS_TILE = new SmallGrassTile(6);
+
+
     private int tileId;
     private int sprite_y = 0;
     private int sprite_x = 0;
 
     public Tile(int sprite_x, int sprite_y, int tileId)
     {
+
+        this.tileId = tileId;
+
+        assert(Tile.TILES[this.tileId] == null);
+        Tile.TILES[tileId] = this;
+
         this.sprite_x = sprite_x;
         this.sprite_y = sprite_y;
-        this.tileId = tileId;
     }
 
     public int getTileId() {
