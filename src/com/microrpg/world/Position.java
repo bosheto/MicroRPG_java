@@ -22,11 +22,11 @@ public class Position {
         this.x = x;
     }
 
-    public float getX() {
+    public int getX() {
         return x;
     }
 
-    public float getY() {
+    public int getY() {
         return y;
     }
 

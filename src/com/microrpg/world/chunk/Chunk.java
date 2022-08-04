@@ -40,6 +40,10 @@ public class Chunk {
         }
     }
 
+    private boolean inRange(int index){
+        return index >=0 && index < constants.CHUNK_SIZE;
+    }
+
     private void GenerateDetails(int x, int y)
     {
         int n = rand.nextInt(60);
@@ -66,6 +70,13 @@ public class Chunk {
             return Tile.GRASS_TILE.getTileId();
         else
             return Tile.STONE_TILE.getTileId();
+    }
+
+    public Tile GetTile(int x, int y){
+        if(inRange(x) && inRange(y)){
+            return Tile.TILES[tiles[y][x]];
+        }
+        return Tile.AIR_TILE;
     }
 
     public void DrawTiles() {

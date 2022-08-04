@@ -13,6 +13,7 @@ public abstract class Tile {
     public static final int TILE_MAX = 256;
     public static final Tile[] TILES = new Tile[TILE_MAX];
 
+    public static final AirTile AIR_TILE = new AirTile(0);
     public static final GrassTile GRASS_TILE = new GrassTile(1);
     public static final SandTile SAND_TILE = new SandTile(2);
     public static final StoneTile STONE_TILE = new StoneTile(3);
@@ -25,11 +26,13 @@ public abstract class Tile {
     private int sprite_y = 0;
     private int sprite_x = 0;
 
-    public Tile(int sprite_x, int sprite_y, int tileId)
+    private String tileName;
+
+    public Tile(int sprite_x, int sprite_y, int tileId, String tileName)
     {
 
         this.tileId = tileId;
-
+        this.tileName = tileName;
         assert(Tile.TILES[this.tileId] == null);
         Tile.TILES[tileId] = this;
 
@@ -47,6 +50,12 @@ public abstract class Tile {
 
         raylib.textures.DrawTextureRec(texture, rect, Position.toScreenPosition(position), Color.WHITE);
     }
+
+    @Override
+    public String toString() {
+        return tileName;
+    }
+
 
     @Override
     public boolean equals(Object obj) {

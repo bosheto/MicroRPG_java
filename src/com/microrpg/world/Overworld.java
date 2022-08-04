@@ -4,6 +4,8 @@ import com.microrpg.constants.constants;
 import com.microrpg.utils.OpenSimplexNoise;
 import com.microrpg.world.chunk.Chunk;
 import com.microrpg.world.chunk.ChunkUtils;
+import com.microrpg.world.tiles.AirTile;
+import com.microrpg.world.tiles.Tile;
 import com.raylib.java.Raylib;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.textures.Texture2D;
@@ -38,7 +40,7 @@ public class Overworld {
         InitializeWorld();
     }
 
-    private void InitializeWorld(){
+    private void InitializeWorld() {
         Position spawn_chunk_position = ChunkUtils.PositionInChunk(Position.toWorldPosition(playerPosition));
         playerChunkPosition = spawn_chunk_position;
         GenerateChunk(spawn_chunk_position);
@@ -48,20 +50,19 @@ public class Overworld {
 
     }
 
-    private void GenerateChunk(Position position){
+    private void GenerateChunk(Position position) {
         Chunk newChunk = new Chunk(position, texture, raylib, noiseMap);
         mapChunks.put(position, newChunk);
     }
 
-    private List<Position> SurroundingPositions(Position position){
+    private List<Position> SurroundingPositions(Position position) {
         int dist = constants.renderDistance;
         int chunkSize = constants.CHUNK_SIZE;
         List<Position> positions = new ArrayList<>();
 
-        for(int y = -dist; y < dist; y++)
-        {
-            for(int x = -dist; x < dist; x++){
-                if(x == 0 && y == 0 )
+        for (int y = -dist; y < dist; y++) {
+            for (int x = -dist; x < dist; x++) {
+                if (x == 0 && y == 0)
                     continue;
                 positions.add(position.add(new Position(x * chunkSize, y * chunkSize)));
             }
@@ -69,23 +70,36 @@ public class Overworld {
         return positions;
     }
 
-     public void Update(Vector2 playerPosition){
+    public Tile GetTile(Vector2 position) {
+        Position checkPos = Position.toWorldPosition(position);
+        Position currentChunkPos = ChunkUtils.PositionInChunk(checkPos);
+        if(mapChunks.containsKey(currentChunkPos)){
+            Chunk c = mapChunks.get(currentChunkPos);
+            int x = checkPos.getX() - currentChunkPos.getX();
+            int y = checkPos.getY() - currentChunkPos.getY();
+            return c.GetTile(x,y);
+        }
+        return Tile.AIR_TILE;
+    }
+
+
+    public void Update(Vector2 playerPosition) {
         this.playerPosition = playerPosition;
         Position currentChunkPosition = ChunkUtils.PositionInChunk(Position.toWorldPosition(this.playerPosition));
 
-        if(playerChunkPosition.equals(currentChunkPosition)){
+        if (playerChunkPosition.equals(currentChunkPosition)) {
             return;
         }
         for (Position position : SurroundingPositions(currentChunkPosition)) {
-            if(!mapChunks.containsKey(position)) {
+            if (!mapChunks.containsKey(position)) {
                 GenerateChunk(position);
             }
         }
         playerChunkPosition = currentChunkPosition;
 
-     }
+    }
 
-    public void draw(){
+    public void draw() {
         mapChunks.get(playerChunkPosition).DrawTiles();
         for (Position position : SurroundingPositions(playerChunkPosition)) {
             mapChunks.get(position).DrawTiles();

@@ -5,6 +5,7 @@ import com.microrpg.entity.PlayerEntity;
 import com.microrpg.world.Overworld;
 
 
+import com.microrpg.world.Position;
 import com.raylib.java.Raylib;
 import com.raylib.java.core.Color;
 import com.raylib.java.core.camera.Camera2D;
@@ -32,7 +33,7 @@ public class Main {
         Texture2D texture = rTextures.LoadTextureFromImage(image);
 
         // Entity and world creation
-        PlayerEntity player = new PlayerEntity(new Vector2(SCREEN_WIDTH / 2f, SCREEN_HEIGHT / 2f));
+        PlayerEntity player = new PlayerEntity(new Vector2(0, 0));
 
         Overworld world = new Overworld(player.getPos(), texture, 12345, raylib);
 
@@ -65,7 +66,8 @@ public class Main {
 
             // Draw FPS counter
             raylib.text.DrawFPS((int)(camera.target.x + SCREEN_WIDTH / 2) - 30,(int)camera.target.y - SCREEN_HEIGHT /2 + 20  , Color.PURPLE);
-
+            raylib.text.DrawText(Position.toWorldPosition(player.getPos()).toString(), (int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 60, 20, Color.PURPLE);
+            raylib.text.DrawText(world.GetTile(player.getPos()).toString(),(int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 80, 20, Color.PURPLE );
             raylib.core.EndDrawing();
         }
 
