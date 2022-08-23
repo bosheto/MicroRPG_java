@@ -33,9 +33,11 @@ public class Main {
         Texture2D texture = rTextures.LoadTextureFromImage(image);
 
         // Entity and world creation
-        PlayerEntity player = new PlayerEntity(new Vector2(0, 0));
+        //Generate world;
+        Overworld world = new Overworld(texture, 12345, raylib);
+        PlayerEntity player = new PlayerEntity(new Vector2(0, 0), world, raylib);
 
-        Overworld world = new Overworld(player.getPos(), texture, 12345, raylib);
+        world.setPlayerPosition(player.getPos());
 
         //Camera
         Camera2D camera = new Camera2D();
@@ -67,7 +69,9 @@ public class Main {
             // Draw FPS counter
             raylib.text.DrawFPS((int)(camera.target.x + SCREEN_WIDTH / 2) - 30,(int)camera.target.y - SCREEN_HEIGHT /2 + 20  , Color.PURPLE);
             raylib.text.DrawText(Position.toWorldPosition(player.getPos()).toString(), (int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 60, 20, Color.PURPLE);
-            raylib.text.DrawText(world.GetTile(player.getPos()).toString(),(int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 80, 20, Color.PURPLE );
+            raylib.text.DrawText(world.GetTile(player.getWorldPos()).toString(),(int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 80, 20, Color.PURPLE );
+            raylib.text.DrawText(player.getCollider().toString(),(int)(camera.target.x + SCREEN_WIDTH / 2) - 300,(int)camera.target.y - SCREEN_HEIGHT /2 + 100, 20, Color.PURPLE );
+
             raylib.core.EndDrawing();
         }
 

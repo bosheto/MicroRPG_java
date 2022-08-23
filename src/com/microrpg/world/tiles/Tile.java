@@ -1,6 +1,8 @@
 package com.microrpg.world.tiles;
 import com.microrpg.constants.constants;
 
+import com.microrpg.entity.Entity;
+import com.microrpg.utils.AABB;
 import com.microrpg.world.Position;
 import com.raylib.java.Raylib;
 import com.raylib.java.core.Color;
@@ -26,16 +28,19 @@ public abstract class Tile {
     private int sprite_y = 0;
     private int sprite_x = 0;
 
+
+    private boolean collider;
+
     private String tileName;
 
-    public Tile(int sprite_x, int sprite_y, int tileId, String tileName)
+    public Tile(int sprite_x, int sprite_y, int tileId, String tileName, boolean hasCollider)
     {
 
         this.tileId = tileId;
         this.tileName = tileName;
         assert(Tile.TILES[this.tileId] == null);
         Tile.TILES[tileId] = this;
-
+        this.collider = hasCollider;
         this.sprite_x = sprite_x;
         this.sprite_y = sprite_y;
     }
@@ -49,6 +54,15 @@ public abstract class Tile {
                 ,(float)constants.SPRITE_SIZE, (float)constants.SPRITE_SIZE);
 
         raylib.textures.DrawTextureRec(texture, rect, Position.toScreenPosition(position), Color.WHITE);
+    }
+
+    public boolean collides(int x, int y, AABB e){
+
+        return false;
+    }
+
+    public boolean isHasCollider() {
+        return collider;
     }
 
     @Override

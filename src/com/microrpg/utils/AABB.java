@@ -4,18 +4,19 @@ package com.microrpg.utils;
  */
 
 
+import static java.lang.String.format;
 
 public class AABB {
-    public int minX, minY, maxX, maxY;
+    public float minX, minY, maxX, maxY;
 
-    public AABB(int minX, int minY, int maxX, int maxY) {
+    public AABB(float minX, float minY, float maxX, float maxY) {
         this.minX = minX;
         this.minY = minY;
         this.maxX = maxX;
         this.maxY = maxY;
     }
 
-    public boolean containsPoint(int px, int py) {
+    public boolean containsPoint(float px, float py) {
         return px >= this.minX && px <= this.maxX && py >= this.minY && py <= this.maxY;
     }
 
@@ -35,5 +36,8 @@ public class AABB {
                 ay1 >= by0;
     }
 
-
+    @Override
+    public String toString() {
+        return format("min x: %.2f max x: %.2f min y: %.2f max y: %.2f", minX, maxX, minY, maxY);
+    }
 }

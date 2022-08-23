@@ -4,7 +4,6 @@ import com.microrpg.constants.constants;
 import com.microrpg.utils.OpenSimplexNoise;
 import com.microrpg.world.chunk.Chunk;
 import com.microrpg.world.chunk.ChunkUtils;
-import com.microrpg.world.tiles.AirTile;
 import com.microrpg.world.tiles.Tile;
 import com.raylib.java.Raylib;
 import com.raylib.java.raymath.Vector2;
@@ -29,8 +28,7 @@ public class Overworld {
 
     private OpenSimplexNoise noiseMap;
 
-    public Overworld(Vector2 playerPosition, Texture2D texture, long seed, Raylib raylib) {
-        this.playerPosition = playerPosition;
+    public Overworld(Texture2D texture, long seed, Raylib raylib) {
         this.texture = texture;
         this.seed = seed;
         chunks = new ArrayList<>();
@@ -41,13 +39,17 @@ public class Overworld {
     }
 
     private void InitializeWorld() {
-        Position spawn_chunk_position = ChunkUtils.PositionInChunk(Position.toWorldPosition(playerPosition));
+        Position spawn_chunk_position = new Position(0,0);//ChunkUtils.PositionInChunk(Position.toWorldPosition(playerPosition));
         playerChunkPosition = spawn_chunk_position;
         GenerateChunk(spawn_chunk_position);
         for (Position position : SurroundingPositions(spawn_chunk_position)) {
             GenerateChunk(position);
         }
 
+    }
+
+    public void setPlayerPosition(Vector2 playerPosition) {
+        this.playerPosition = playerPosition;
     }
 
     private void GenerateChunk(Position position) {
@@ -70,17 +72,31 @@ public class Overworld {
         return positions;
     }
 
-    public Tile GetTile(Vector2 position) {
-        Position checkPos = Position.toWorldPosition(position);
-        Position currentChunkPos = ChunkUtils.PositionInChunk(checkPos);
+    public Tile GetTile(Position position) {
+        Position currentChunkPos = ChunkUtils.PositionInChunk(position);
         if(mapChunks.containsKey(currentChunkPos)){
             Chunk c = mapChunks.get(currentChunkPos);
-            int x = checkPos.getX() - currentChunkPos.getX();
-            int y = checkPos.getY() - currentChunkPos.getY();
+            int x = position.getX() - currentChunkPos.getX();
+            int y = position.getY() - currentChunkPos.getY();
             return c.GetTile(x,y);
         }
         return Tile.AIR_TILE;
     }
+
+    public Tile GetTile(Vector2 vector2){
+        Position currentChunkPos = ChunkUtils.PositionInChunk(vector2);
+
+        if(mapChunks.containsKey(currentChunkPos)){
+            Chunk c = mapChunks.get(currentChunkPos);
+
+            int x = (int)vector2.x - currentChunkPos.getX();
+            int y = (int)vector2.y - currentChunkPos.getY();
+
+            return c.GetTile(x,y);
+        }
+        return Tile.AIR_TILE;
+    }
+
 
 
     public void Update(Vector2 playerPosition) {

@@ -8,8 +8,8 @@ public abstract class DetailTile extends Tile{
 
     Tile groundTile;
 
-    public DetailTile(int sprite_x, int sprite_y, int tileId, String name) {
-        super(sprite_x, sprite_y, tileId, name);
+    public DetailTile(int sprite_x, int sprite_y, int tileId, String name, boolean hasCollider) {
+        super(sprite_x, sprite_y, tileId, name, hasCollider);
     }
 
     public void setGroundTile(Tile groundTile) {
