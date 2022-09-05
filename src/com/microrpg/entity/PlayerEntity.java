@@ -16,14 +16,16 @@ import static java.lang.String.format;
 public class PlayerEntity extends Entity{
 
     public PlayerEntity(Vector2 pos, Overworld world, Raylib raylib) {
-        super(pos, 10, 4f, 0, 1, world, raylib);
+        super(pos, 10, 3.8f, 0, 1, world, raylib);
         setCollider(new AABB(0,0,1,1));
 
     }
 
     private boolean inCollision(Vector2 pos){
         Vector2 tempPos = new Vector2(pos.x, pos.y);
-        float offset = constants.SPRITE_SIZE / 2.0f - 6;
+        float offsetX = getCollider().minX; //constants.SPRITE_SIZE / 2;
+        float offset = 32/2.0f; //constants.SPRITE_SIZE / 2;
+
         if(pos.getX() < getPos().getX())
             tempPos.setX(pos.x - offset);
         if(pos.getX() > getPos().getX())
@@ -36,26 +38,41 @@ public class PlayerEntity extends Entity{
     }
 
     public void move() {
+        HorizontalMove();
+        VerticalMove();
+    }
+    private void VerticalMove(){
         Vector2 new_pos = new Vector2();
         float x = getPos().getX();
         float y = getPos().getY();
         if(rCore.IsKeyDown(KEY_W)){
-            y += -getSpeed();
+            y += -1f * getSpeed();
         }
         if(rCore.IsKeyDown(KEY_S)){
-            y += getSpeed();
+            y += 1 * getSpeed();
         }
-        if(rCore.IsKeyDown(KEY_A)){
-            x += -getSpeed();
-        }
-        if(rCore.IsKeyDown(KEY_D)){
-            x += getSpeed();
-        }
-
-        new_pos.setX(x);
         new_pos.setY(y);
+        new_pos.setX(getPos().x);
         if(!inCollision(new_pos))
             setPos(new_pos);
-
     }
+
+    private void HorizontalMove(){
+        Vector2 new_pos = new Vector2();
+        float x = getPos().getX();
+        float y = getPos().getY();
+
+        if(rCore.IsKeyDown(KEY_A)){
+            x += -1f * getSpeed();
+        }
+        if(rCore.IsKeyDown(KEY_D)){
+            x += 1 * getSpeed();
+        }
+        new_pos.setX(x);
+        new_pos.setY(getPos().y);
+        if(!inCollision(new_pos))
+            setPos(new_pos);
+    }
+
+
 }

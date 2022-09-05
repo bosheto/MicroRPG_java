@@ -71,7 +71,7 @@ public class Main {
             // Draw FPS counter
             raylib.text.DrawFPS((int)(camera.target.x + SCREEN_WIDTH / 2) - 30,(int)camera.target.y - SCREEN_HEIGHT /2 + 20  , Color.PURPLE);
             raylib.text.DrawText(Position.toWorldPosition(player.getPos()).toString(), (int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 60, 20, Color.PURPLE);
-            raylib.text.DrawText(format("%.2f", player.getCollider().maxY), (int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 80, 20, Color.PURPLE);
+            raylib.text.DrawText(format("%.2f", player.getCollider().minX), (int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 80, 20, Color.PURPLE);
 
            // raylib.text.DrawText(world.GetTile(player.getWorldPos()).toString(),(int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 80, 20, Color.PURPLE );
             //raylib.text.DrawText(player.getCollider().toString(),(int)(camera.target.x + SCREEN_WIDTH / 2) - 300,(int)camera.target.y - SCREEN_HEIGHT /2 + 100, 20, Color.PURPLE );
