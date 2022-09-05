@@ -16,6 +16,8 @@ import com.raylib.java.textures.rTextures;
 
 import com.microrpg.constants.constants;
 
+import static java.lang.String.format;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -69,8 +71,12 @@ public class Main {
             // Draw FPS counter
             raylib.text.DrawFPS((int)(camera.target.x + SCREEN_WIDTH / 2) - 30,(int)camera.target.y - SCREEN_HEIGHT /2 + 20  , Color.PURPLE);
             raylib.text.DrawText(Position.toWorldPosition(player.getPos()).toString(), (int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 60, 20, Color.PURPLE);
-            raylib.text.DrawText(world.GetTile(player.getWorldPos()).toString(),(int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 80, 20, Color.PURPLE );
-            raylib.text.DrawText(player.getCollider().toString(),(int)(camera.target.x + SCREEN_WIDTH / 2) - 300,(int)camera.target.y - SCREEN_HEIGHT /2 + 100, 20, Color.PURPLE );
+            raylib.text.DrawText(format("%.2f", player.getCollider().maxY), (int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 80, 20, Color.PURPLE);
+
+           // raylib.text.DrawText(world.GetTile(player.getWorldPos()).toString(),(int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 80, 20, Color.PURPLE );
+            //raylib.text.DrawText(player.getCollider().toString(),(int)(camera.target.x + SCREEN_WIDTH / 2) - 300,(int)camera.target.y - SCREEN_HEIGHT /2 + 100, 20, Color.PURPLE );
+            //raylib.text.DrawText(world.GetTile(Position.toWorldPosition(new Vector2(player.getCollider().maxX, player.getCollider().maxY))).toString(),(int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 80, 20, Color.PURPLE );
+
 
             raylib.core.EndDrawing();
         }

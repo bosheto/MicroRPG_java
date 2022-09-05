@@ -79,7 +79,7 @@ public abstract class Entity {
 
         Rectangle rect = new Rectangle(rectX, rectY,spriteSize, spriteSize);
 
-        raylib.shapes.DrawRectangle((int) collider.minX, (int) collider.minY, (int) collider.maxX, (int) collider.maxY, Color.GREEN);
+//        raylib.shapes.DrawRectangle((int) collider.minX, (int) collider.minY, (int) collider.maxX, (int) collider.maxY, Color.GREEN);
         raylib.textures.DrawTextureRec(texture, rect, getPos(), Color.WHITE);
 
     }
@@ -94,8 +94,8 @@ public abstract class Entity {
 
     public void setPos(Vector2 pos) {
         this.pos = pos;
-        UpdateWorldPos();
         UpdateColliderPos();
+        UpdateWorldPos();
     }
 
 

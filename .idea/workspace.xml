@@ -2,22 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bbd074bd-25fc-477a-b683-e24da41c93c4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Raylib_J_0_4.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/microrpg/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/microrpg/entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/entity/Entity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/microrpg/entity/PlayerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/entity/PlayerEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/microrpg/utils/AABB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/utils/AABB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/Overworld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/Overworld.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/chunk/ChunkUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/chunk/ChunkUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/AirTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/AirTile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/DetailTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/DetailTile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/GrassTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/GrassTile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/SandTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/SandTile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/SmallGrassTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/SmallGrassTile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/StoneTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/StoneTile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/TreeTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/TreeTile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/WaterTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/WaterTile.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,21 +34,20 @@
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Boris Gezkovski/Downloads/Raylib-J_0.4.jar&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/Boris Gezkovski/Downloads/MicroRPG_java/lib/Raylib-J_0.4.jar",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.microrpg.Main" />
