@@ -18,6 +18,7 @@ import com.raylib.java.textures.rTextures;
 
 import com.microrpg.constants.constants;
 
+import static java.lang.CharSequence.compare;
 import static java.lang.String.format;
 
 public class Main {
@@ -46,7 +47,7 @@ public class Main {
         //Camera
         Camera2D camera = new Camera2D();
         camera.target = player.getPos();
-        camera.offset = new Vector2((float)SCREEN_WIDTH / 2, (float)SCREEN_HEIGHT / 2);
+        camera.offset = new Vector2((float)SCREEN_WIDTH / 2f, (float)SCREEN_HEIGHT / 2f);
         camera.rotation = 0.0f;
         camera.zoom = 1f;
 
@@ -72,19 +73,29 @@ public class Main {
 
             // Draw FPS counter
             raylib.text.DrawFPS((int)(camera.target.x + SCREEN_WIDTH / 2) - 30,(int)camera.target.y - SCREEN_HEIGHT /2 + 20  , Color.PURPLE);
-            raylib.text.DrawText(player.getPos().toString(), (int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 60, 20, Color.PURPLE);
-            raylib.text.DrawText(format("%.2f", player.getCollider().minX), (int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 80, 20, Color.PURPLE);
+            raylib.text.DrawText(player.getWorldPos().toString(), (int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 60, 20, Color.PURPLE);
 
             if(rCore.IsMouseButtonDown(0)){
                 Vector2 vPos = rCore.GetMousePosition();
-                Position pos = Position.toWorldPosition(vPos);
-                System.out.println(pos.toString());
+                vPos.setX(Math.round(vPos.x /constants.SPRITE_SIZE));
+                vPos.setY(Math.round(vPos.y / constants.SPRITE_SIZE));
+                float x = (vPos.x - (((float)SCREEN_WIDTH / 2f) / (float) constants.SPRITE_SIZE));
+                float y = (vPos.y - ((SCREEN_HEIGHT / 2f) / (float)constants.SPRITE_SIZE));
+
+                Position pos = new Position((int)Math.floor(x), (int)Math.floor(y));
+                Position tPos = player.getWorldPos().add(pos);
+                System.out.println(world.GetTile(tPos).toString());
 
             }
             raylib.core.EndDrawing();
         }
 
 
+
     }
+    private static String vecToString(Vector2 vec){
+        return format("%.2f %.2f", vec.x, vec.y);
+    }
+
 
 }
