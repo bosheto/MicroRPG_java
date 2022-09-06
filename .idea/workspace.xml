@@ -6,6 +6,7 @@
       <change beforePath="$PROJECT_DIR$/src/com/microrpg/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/microrpg/entity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/entity/Entity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/microrpg/entity/PlayerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/entity/PlayerEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/microrpg/world/tiles/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/microrpg/world/tiles/Tile.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

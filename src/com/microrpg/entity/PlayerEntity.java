@@ -16,15 +16,15 @@ import static java.lang.String.format;
 public class PlayerEntity extends Entity{
 
     public PlayerEntity(Vector2 pos, Overworld world, Raylib raylib) {
-        super(pos, 10, 3.8f, 0, 1, world, raylib);
+        super(pos, 10, 4f, 0, 1, world, raylib);
         setCollider(new AABB(0,0,1,1));
 
     }
 
     private boolean inCollision(Vector2 pos){
         Vector2 tempPos = new Vector2(pos.x, pos.y);
-        float offsetX = getCollider().minX; //constants.SPRITE_SIZE / 2;
-        float offset = 32/2.0f; //constants.SPRITE_SIZE / 2;
+        float feather = 7.5f;
+        float offset = (constants.SPRITE_SIZE - feather)/2.0f ;
 
         if(pos.getX() < getPos().getX())
             tempPos.setX(pos.x - offset);
@@ -34,7 +34,7 @@ public class PlayerEntity extends Entity{
             tempPos.setY(pos.y + offset);
         if(pos.getY() < getPos().getY())
             tempPos.setY(pos.y - offset);
-        return getWorld().GetTile(Position.toWorldPosition(tempPos)).isHasCollider();
+        return getWorld().GetTile(Position.toWorldPosition(tempPos)).hasCollider();
     }
 
     public void move() {

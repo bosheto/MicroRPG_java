@@ -79,7 +79,7 @@ public abstract class Entity {
 
         Rectangle rect = new Rectangle(rectX, rectY,spriteSize, spriteSize);
 
-        raylib.shapes.DrawRectangle((int) collider.minX, (int) collider.minY, (int) constants.CHUNK_SIZE, (int) collider.maxY, Color.GREEN);
+//        raylib.shapes.DrawRectangle((int) collider.minX, (int) collider.minY, (int) constants.CHUNK_SIZE, (int) collider.maxY, Color.GREEN);
         raylib.textures.DrawTextureRec(texture, rect, getPos(), Color.WHITE);
 
     }
