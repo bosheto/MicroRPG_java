@@ -4,13 +4,9 @@ import com.microrpg.entity.PlayerEntity;
 
 import com.microrpg.world.Overworld;
 
-
-import com.microrpg.world.Position;
 import com.raylib.java.Raylib;
 import com.raylib.java.core.Color;
 import com.raylib.java.core.camera.Camera2D;
-import com.raylib.java.core.input.Mouse;
-import com.raylib.java.core.rCore;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.textures.Image;
 import com.raylib.java.textures.Texture2D;
@@ -18,7 +14,6 @@ import com.raylib.java.textures.rTextures;
 
 import com.microrpg.constants.constants;
 
-import static java.lang.CharSequence.compare;
 import static java.lang.String.format;
 
 public class Main {
@@ -54,7 +49,7 @@ public class Main {
         while(!raylib.core.WindowShouldClose()){
 
             // Update variables here
-            player.move();
+            player.Update();
             world.Update(player.getPos());
             camera.target = player.getPos();
 
@@ -75,22 +70,8 @@ public class Main {
             raylib.text.DrawFPS((int)(camera.target.x + SCREEN_WIDTH / 2) - 30,(int)camera.target.y - SCREEN_HEIGHT /2 + 20  , Color.PURPLE);
             raylib.text.DrawText(player.getWorldPos().toString(), (int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 60, 20, Color.PURPLE);
 
-            if(rCore.IsMouseButtonDown(0)){
-                Vector2 vPos = rCore.GetMousePosition();
-                vPos.setX(Math.round(vPos.x /constants.SPRITE_SIZE));
-                vPos.setY(Math.round(vPos.y / constants.SPRITE_SIZE));
-                float x = (vPos.x - (((float)SCREEN_WIDTH / 2f) / (float) constants.SPRITE_SIZE));
-                float y = (vPos.y - ((SCREEN_HEIGHT / 2f) / (float)constants.SPRITE_SIZE));
-
-                Position pos = new Position((int)Math.floor(x), (int)Math.floor(y));
-                Position tPos = player.getWorldPos().add(pos);
-                System.out.println(world.GetTile(tPos).toString());
-
-            }
             raylib.core.EndDrawing();
         }
-
-
 
     }
     private static String vecToString(Vector2 vec){
@@ -99,3 +80,4 @@ public class Main {
 
 
 }
+

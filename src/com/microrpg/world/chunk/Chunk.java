@@ -79,6 +79,11 @@ public class Chunk {
         return Tile.AIR_TILE;
     }
 
+    public void SetTile(int x, int y, int tile){
+        if(inRange(x) && inRange(y))
+            tiles[y][x] = tile;
+    }
+
     public void DrawTiles() {
         for (int y = 0; y < constants.CHUNK_SIZE; y++) {
             for (int x = 0; x < constants.CHUNK_SIZE; x++) {

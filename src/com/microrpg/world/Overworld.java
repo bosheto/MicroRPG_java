@@ -72,6 +72,16 @@ public class Overworld {
         return positions;
     }
 
+    public void SetTile(Position position, int id){
+        Position currentChunkPos = ChunkUtils.PositionInChunk(position);
+        if(mapChunks.containsKey(currentChunkPos)){
+            Chunk c = mapChunks.get(currentChunkPos);
+            int x = position.getX() - currentChunkPos.getX();
+            int y = position.getY() - currentChunkPos.getY();
+            c.SetTile(x, y, id);
+        }
+    }
+
     public Tile GetTile(Position position) {
         Position currentChunkPos = ChunkUtils.PositionInChunk(position);
         if(mapChunks.containsKey(currentChunkPos)){

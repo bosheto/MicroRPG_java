@@ -1,8 +1,15 @@
 package com.microrpg.world.tiles;
 
 
-public class StoneTile extends Tile {
+import com.microrpg.world.contracts.Breakable;
+
+public class StoneTile extends Tile implements Breakable {
     public StoneTile(int tileId) {
         super(3, 0, tileId, "Stone", true);
+    }
+
+    @Override
+    public Tile BreakBlock() {
+        return Tile.COBBLESTONE_TILE;
     }
 }

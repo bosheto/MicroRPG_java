@@ -20,7 +20,7 @@ public abstract class Tile {
     public static final WaterTile WATER_TILE = new WaterTile(4);
     public static final TreeTile TREE_TILE = new TreeTile(5);
     public static final SmallGrassTile SMALL_GRASS_TILE = new SmallGrassTile(6);
-
+    public static final CobblestoneTile COBBLESTONE_TILE = new CobblestoneTile(7);
 
     private int tileId;
     private int sprite_y = 0;
