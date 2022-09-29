@@ -1,5 +1,5 @@
 package com.microrpg.world.tiles;
-import com.microrpg.constants.constants;
+import com.microrpg.constants.EngineConstants;
 
 import com.microrpg.utils.AABB;
 import com.microrpg.world.Position;
@@ -21,7 +21,8 @@ public abstract class Tile {
     public static final TreeTile TREE_TILE = new TreeTile(5);
     public static final SmallGrassTile SMALL_GRASS_TILE = new SmallGrassTile(6);
     public static final CobblestoneTile COBBLESTONE_TILE = new CobblestoneTile(7);
-
+    public static final WoodenPlackTile WOODEN_PLACK_TILE = new WoodenPlackTile(8);
+    public static final DirtTile DIRT_TILE = new DirtTile(9);
     private int tileId;
     private int sprite_y = 0;
     private int sprite_x = 0;
@@ -48,8 +49,10 @@ public abstract class Tile {
     }
 
     public void Draw(Raylib raylib, Position position, Texture2D texture){
-        Rectangle rect = new Rectangle((float)sprite_x * constants.SPRITE_SIZE, (float)sprite_y * constants.SPRITE_SIZE
-                ,(float)constants.SPRITE_SIZE, (float)constants.SPRITE_SIZE);
+        Rectangle rect = new Rectangle(
+                (float)sprite_x * EngineConstants.SPRITE_SIZE,
+                (float)sprite_y * EngineConstants.SPRITE_SIZE,
+                (float) EngineConstants.SPRITE_SIZE, (float) EngineConstants.SPRITE_SIZE);
 
         raylib.textures.DrawTextureRec(texture, rect, Position.toScreenPosition(position), Color.WHITE);
     }

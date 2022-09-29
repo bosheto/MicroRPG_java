@@ -1,6 +1,6 @@
 package com.microrpg.world;
 
-import com.microrpg.constants.constants;
+import com.microrpg.constants.EngineConstants;
 import com.raylib.java.raymath.Vector2;
 
 import java.util.Objects;
@@ -35,11 +35,11 @@ public class Position {
     }
 
     public static Position toWorldPosition(Vector2 pos){
-        return new Position(Math.round(pos.x / constants.SPRITE_SIZE), Math.round(pos.y / constants.SPRITE_SIZE));
+        return new Position(Math.round(pos.x / EngineConstants.SPRITE_SIZE), Math.round(pos.y / EngineConstants.SPRITE_SIZE));
     }
 
     public static Vector2 toScreenPosition(Position pos){
-        return new Vector2(pos.x * constants.SPRITE_SIZE, pos.y * constants.SPRITE_SIZE);
+        return new Vector2(pos.x * EngineConstants.SPRITE_SIZE, pos.y * EngineConstants.SPRITE_SIZE);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return Float.compare(position.x, x) == 0 && Float.compare(position.y, y) == 0;
+        return position.x == x && position.y == y;
     }
 
     @Override

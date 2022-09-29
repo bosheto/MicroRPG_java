@@ -1,6 +1,9 @@
 package com.microrpg.entity;
 
-import com.microrpg.constants.constants;
+import com.microrpg.constants.EngineConstants;
+import com.microrpg.constants.UiConstants;
+import com.microrpg.items.conracts.Item;
+import com.microrpg.ui.HotBar;
 import com.microrpg.utils.AABB;
 import com.microrpg.world.Overworld;
 
@@ -12,21 +15,31 @@ import com.raylib.java.core.rCore;
 import com.raylib.java.raymath.Vector2;
 
 import static com.raylib.java.core.input.Keyboard.*;
-import static java.lang.String.format;
 
 
 public class PlayerEntity extends Entity{
+
+    private HotBar uiHotBar;
+    private int hotBarPos = 0;
+
+    private Item[] hotbarItems = new Item[UiConstants.HOT_BAR_SIZE];
 
     public PlayerEntity(Vector2 pos, Overworld world, Raylib raylib) {
         super(pos, 10, 4f, 0, 1, world, raylib);
         setCollider(new AABB(0,0,1,1));
 
+
     }
+
+    public void setUiHotBar(HotBar uiHotBar) {
+        this.uiHotBar = uiHotBar;
+    }
+
 
     private boolean inCollision(Vector2 pos){
         Vector2 tempPos = new Vector2(pos.x, pos.y);
         float feather = 1;
-        float offset = (constants.SPRITE_SIZE - feather)/2.0f ;
+        float offset = (EngineConstants.SPRITE_SIZE - feather)/2.0f ;
 
         if(pos.getX() < getPos().getX())
             tempPos.setX(pos.x - offset);
@@ -46,10 +59,10 @@ public class PlayerEntity extends Entity{
 
     public Position getMouseClickPosition(){
         Vector2 vPos = rCore.GetMousePosition();
-        vPos.setX(Math.round(vPos.x /constants.SPRITE_SIZE));
-        vPos.setY(Math.round(vPos.y / constants.SPRITE_SIZE));
-        float x = (vPos.x - ((constants.SCREEN_WIDTH / 2f) / (float) constants.SPRITE_SIZE));
-        float y = (vPos.y - ((constants.SCREEN_HEIGHT / 2f) / (float)constants.SPRITE_SIZE));
+        vPos.setX(Math.round(vPos.x / EngineConstants.SPRITE_SIZE));
+        vPos.setY(Math.round(vPos.y / EngineConstants.SPRITE_SIZE));
+        float x = (vPos.x - ((EngineConstants.SCREEN_WIDTH / 2f) / (float) EngineConstants.SPRITE_SIZE));
+        float y = (vPos.y - ((EngineConstants.SCREEN_HEIGHT / 2f) / (float) EngineConstants.SPRITE_SIZE));
 
         Position pos = new Position((int)Math.floor(x), (int)Math.floor(y));
 
@@ -104,12 +117,46 @@ public class PlayerEntity extends Entity{
             Tile t = getWorld().GetTile(tPos);
             // TODO make the tile placed player selectable
             if(!(t instanceof Breakable)){
-              getWorld().SetTile(tPos, Tile.STONE_TILE.getTileId());
+              getWorld().SetTile(tPos, Tile.WOODEN_PLACK_TILE.getTileId());
             }
         }
     }
 
+    private void updateHotBar(){
+
+        if(rCore.IsKeyDown(KEY_ONE))
+            hotBarPos = 0;
+        if(rCore.IsKeyDown(KEY_TWO))
+            hotBarPos = 1;
+        if(rCore.IsKeyDown(KEY_THREE))
+            hotBarPos = 2;
+        if(rCore.IsKeyDown(KEY_FOUR))
+            hotBarPos = 3;
+        if(rCore.IsKeyDown(KEY_FIVE))
+            hotBarPos = 4;
+        if(rCore.IsKeyDown(KEY_SIX))
+            hotBarPos = 5;
+        if(rCore.IsKeyDown(KEY_SEVEN))
+            hotBarPos = 6;
+        if(rCore.IsKeyDown(KEY_EIGHT))
+            hotBarPos = 7;
+
+        float mouseWheelMove = rCore.GetMouseWheelMove();
+        if(mouseWheelMove != 0){
+            hotBarPos += mouseWheelMove;
+        }
+
+        if(hotBarPos > 7)
+            hotBarPos = 7;
+        if(hotBarPos < 0)
+            hotBarPos = 0;
+
+        uiHotBar.setSelectorPos(hotBarPos);
+    }
+
     public void Update(){
+        uiHotBar.setItems(hotbarItems);
+        updateHotBar();
         MouseClick();
         move();
     }

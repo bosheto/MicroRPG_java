@@ -1,6 +1,6 @@
 package com.microrpg.constants;
 
-public class constants {
+public class EngineConstants {
     public static final int SPRITE_SIZE = 32;
     public static final int CHUNK_SIZE = 32;
 

@@ -1,6 +1,6 @@
 package com.microrpg.entity;
 
-import com.microrpg.constants.constants;
+import com.microrpg.constants.EngineConstants;
 import com.microrpg.utils.AABB;
 import com.microrpg.world.Overworld;
 import com.microrpg.world.Position;
@@ -52,8 +52,8 @@ public abstract class Entity {
     public void UpdateColliderPos() {
         collider.minX = getPos().x;
         collider.minY = getPos().y;
-        collider.maxX = constants.SPRITE_SIZE;
-        collider.maxY = constants.SPRITE_SIZE;
+        collider.maxX = EngineConstants.SPRITE_SIZE;
+        collider.maxY = EngineConstants.SPRITE_SIZE;
     }
 
     public Overworld getWorld() {
@@ -73,7 +73,7 @@ public abstract class Entity {
     }
 
     public void draw(Raylib raylib, Texture2D texture) {
-        float spriteSize = (float)constants.SPRITE_SIZE;
+        float spriteSize = (float) EngineConstants.SPRITE_SIZE;
         float rectX = (float) tile_x * spriteSize;
         float rectY = (float) tile_y * spriteSize;
 

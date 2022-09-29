@@ -1,6 +1,6 @@
 package com.microrpg.world;
 
-import com.microrpg.constants.constants;
+import com.microrpg.constants.EngineConstants;
 import com.microrpg.utils.OpenSimplexNoise;
 import com.microrpg.world.chunk.Chunk;
 import com.microrpg.world.chunk.ChunkUtils;
@@ -58,8 +58,8 @@ public class Overworld {
     }
 
     private List<Position> SurroundingPositions(Position position) {
-        int dist = constants.renderDistance;
-        int chunkSize = constants.CHUNK_SIZE;
+        int dist = EngineConstants.renderDistance;
+        int chunkSize = EngineConstants.CHUNK_SIZE;
         List<Position> positions = new ArrayList<>();
 
         for (int y = -dist; y < dist; y++) {

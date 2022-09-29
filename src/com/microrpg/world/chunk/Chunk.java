@@ -3,7 +3,7 @@ package com.microrpg.world.chunk;
 import com.microrpg.utils.OpenSimplexNoise;
 import com.microrpg.world.Position;
 import com.microrpg.world.tiles.*;
-import com.microrpg.constants.constants;
+import com.microrpg.constants.EngineConstants;
 import com.raylib.java.Raylib;
 import com.raylib.java.textures.Texture2D;
 
@@ -26,14 +26,14 @@ public class Chunk {
         this.texture = texture;
         this.raylib = raylib;
         rand = new Random();
-        tiles = new int[constants.CHUNK_SIZE][constants.CHUNK_SIZE];
+        tiles = new int[EngineConstants.CHUNK_SIZE][EngineConstants.CHUNK_SIZE];
         this.noiseMap = noiseMap;
         generateChunk();
     }
 
     private void generateChunk() {
-        for (int y = 0; y < constants.CHUNK_SIZE; y++) {
-            for (int x = 0; x < constants.CHUNK_SIZE; x++) {
+        for (int y = 0; y < EngineConstants.CHUNK_SIZE; y++) {
+            for (int x = 0; x < EngineConstants.CHUNK_SIZE; x++) {
                 tiles[y][x] = GenerateTiles(x,y);
                 GenerateDetails(x, y);
             }
@@ -41,7 +41,7 @@ public class Chunk {
     }
 
     private boolean inRange(int index){
-        return index >=0 && index < constants.CHUNK_SIZE;
+        return index >=0 && index < EngineConstants.CHUNK_SIZE;
     }
 
     private void GenerateDetails(int x, int y)
@@ -85,8 +85,8 @@ public class Chunk {
     }
 
     public void DrawTiles() {
-        for (int y = 0; y < constants.CHUNK_SIZE; y++) {
-            for (int x = 0; x < constants.CHUNK_SIZE; x++) {
+        for (int y = 0; y < EngineConstants.CHUNK_SIZE; y++) {
+            for (int x = 0; x < EngineConstants.CHUNK_SIZE; x++) {
                 int id = tiles[y][x];
                 Tile t = Tile.TILES[id];
                 Position pos = this.pos.add(new Position(x, y));

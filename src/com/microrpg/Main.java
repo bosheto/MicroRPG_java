@@ -2,6 +2,8 @@ package com.microrpg;
 
 import com.microrpg.entity.PlayerEntity;
 
+import com.microrpg.ui.HotBar;
+import com.microrpg.ui.UiManager;
 import com.microrpg.world.Overworld;
 
 import com.raylib.java.Raylib;
@@ -12,16 +14,17 @@ import com.raylib.java.textures.Image;
 import com.raylib.java.textures.Texture2D;
 import com.raylib.java.textures.rTextures;
 
-import com.microrpg.constants.constants;
+import com.microrpg.constants.EngineConstants;
 
 import static java.lang.String.format;
+import static com.raylib.java.core.input.Keyboard.*;
 
 public class Main {
     public static void main(String[] args) {
 
         // Initialization
-        final int SCREEN_WIDTH = constants.SCREEN_WIDTH;
-        final int SCREEN_HEIGHT = constants.SCREEN_HEIGHT;
+        final int SCREEN_WIDTH = EngineConstants.SCREEN_WIDTH;
+        final int SCREEN_HEIGHT = EngineConstants.SCREEN_HEIGHT;
 
         Raylib raylib = new Raylib();
         raylib.core.InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Raylib-J [core] example -- basic window");
@@ -31,6 +34,10 @@ public class Main {
         // Texture loading
         Image image = rTextures.LoadImage("src/assets/SpriteSheet.png");
         Texture2D texture = rTextures.LoadTextureFromImage(image);
+
+        Image itemsImage = rTextures.LoadImage("src/assets/ItemsSpriteSheet.png");
+        Texture2D itemsTexture = rTextures.LoadTextureFromImage(itemsImage);
+
 
         // Entity and world creation
         //Generate world;
@@ -46,13 +53,17 @@ public class Main {
         camera.rotation = 0.0f;
         camera.zoom = 1f;
 
+        // UI initialization
+        HotBar hotBar = new HotBar(raylib, camera, texture, itemsTexture);
+
+        player.setUiHotBar(hotBar);
+
         while(!raylib.core.WindowShouldClose()){
 
             // Update variables here
             player.Update();
             world.Update(player.getPos());
             camera.target = player.getPos();
-
 
             // Draw here
 
@@ -67,8 +78,14 @@ public class Main {
             player.draw(raylib, texture);
 
             // Draw FPS counter
-            raylib.text.DrawFPS((int)(camera.target.x + SCREEN_WIDTH / 2) - 30,(int)camera.target.y - SCREEN_HEIGHT /2 + 20  , Color.PURPLE);
+            raylib.text.DrawFPS(
+                    (int)(camera.target.x + SCREEN_WIDTH / 2) - 30,
+                    (int)camera.target.y - SCREEN_HEIGHT /2 + 20,
+                    Color.PURPLE);
+
             raylib.text.DrawText(player.getWorldPos().toString(), (int)(camera.target.x + SCREEN_WIDTH / 2) - 100,(int)camera.target.y - SCREEN_HEIGHT /2 + 60, 20, Color.PURPLE);
+
+            hotBar.DrawElement();
 
             raylib.core.EndDrawing();
         }
