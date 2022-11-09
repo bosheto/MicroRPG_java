@@ -42,7 +42,7 @@ public class Main {
         // Entity and world creation
         //Generate world;
         Overworld world = new Overworld(texture, 12345, raylib);
-        PlayerEntity player = new PlayerEntity(new Vector2(0, 0), world, raylib);
+        PlayerEntity player = new PlayerEntity(new Vector2(0, 0), world, raylib, texture);
 
         world.setPlayerPosition(player.getPos());
 
@@ -75,7 +75,7 @@ public class Main {
             //User draw calls
 
             world.draw();
-            player.draw(raylib, texture);
+            player.draw(raylib);
 
             // Draw FPS counter
             raylib.text.DrawFPS(

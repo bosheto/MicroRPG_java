@@ -25,7 +25,13 @@ public abstract class Entity {
 
     private Raylib raylib;
 
-    public Entity(Vector2 pos, int hp, float speed, int tile_x, int tile_y, Overworld world, Raylib raylib) {
+    private Texture2D texture;
+
+    public Texture2D getTexture() {
+        return texture;
+    }
+
+    public Entity(Vector2 pos, int hp, float speed, int tile_x, int tile_y, Overworld world, Raylib raylib, Texture2D texture) {
         this.hp = hp;
         this.speed = speed;
         this.pos = pos;
@@ -35,6 +41,7 @@ public abstract class Entity {
         this.hasCollision = false;
         this.world = world;
         this.raylib = raylib;
+        this.texture = texture;
     }
 
     protected Raylib GetRaylib() {
@@ -72,7 +79,7 @@ public abstract class Entity {
         this.collider = collider;
     }
 
-    public void draw(Raylib raylib, Texture2D texture) {
+    public void draw(Raylib raylib) {
         float spriteSize = (float) EngineConstants.SPRITE_SIZE;
         float rectX = (float) tile_x * spriteSize;
         float rectY = (float) tile_y * spriteSize;
@@ -99,4 +106,7 @@ public abstract class Entity {
     }
 
 
+    protected Raylib getRaylib() {
+        return raylib;
+    }
 }

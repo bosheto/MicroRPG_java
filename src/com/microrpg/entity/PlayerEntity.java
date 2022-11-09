@@ -5,14 +5,23 @@ import com.microrpg.constants.UiConstants;
 import com.microrpg.items.conracts.Item;
 import com.microrpg.ui.HotBar;
 import com.microrpg.utils.AABB;
+import com.microrpg.utils.A_Star;
 import com.microrpg.world.Overworld;
 
 import com.microrpg.world.Position;
 import com.microrpg.world.contracts.Breakable;
 import com.microrpg.world.tiles.Tile;
 import com.raylib.java.Raylib;
+import com.raylib.java.core.Color;
 import com.raylib.java.core.rCore;
 import com.raylib.java.raymath.Vector2;
+import com.raylib.java.shapes.Rectangle;
+import com.raylib.java.textures.Texture2D;
+
+import java.io.PipedOutputStream;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import static com.raylib.java.core.input.Keyboard.*;
 
@@ -24,11 +33,20 @@ public class PlayerEntity extends Entity{
 
     private Item[] hotbarItems = new Item[UiConstants.HOT_BAR_SIZE];
 
-    public PlayerEntity(Vector2 pos, Overworld world, Raylib raylib) {
-        super(pos, 10, 4f, 0, 1, world, raylib);
+    private boolean drawMoveGrid = false;
+
+    private int moveSpeed = 5;
+
+    private boolean inMove = false;
+
+    HashMap<Position, Boolean> moveMap;
+
+    A_Star nav;
+
+    public PlayerEntity(Vector2 pos, Overworld world, Raylib raylib, Texture2D texture) {
+        super(pos, 10, 4f, 0, 1, world, raylib, texture);
         setCollider(new AABB(0,0,1,1));
-
-
+        nav = new A_Star();
     }
 
     public void setUiHotBar(HotBar uiHotBar) {
@@ -52,9 +70,12 @@ public class PlayerEntity extends Entity{
         return getWorld().GetTile(Position.toWorldPosition(tempPos)).hasCollider();
     }
 
-    public void move() {
-        HorizontalMove();
-        VerticalMove();
+
+    public void move(Position pos) {
+        if(moveMap.containsKey(pos) && !moveMap.get(pos)){
+            setPos(Position.toScreenPosition(pos));
+            inMove = false;
+        }
     }
 
     public Position getMouseClickPosition(){
@@ -69,56 +90,83 @@ public class PlayerEntity extends Entity{
         return getWorldPos().add(pos);
     }
 
-    private void VerticalMove(){
-        Vector2 new_pos = new Vector2();
-        float x = getPos().getX();
-        float y = getPos().getY();
-        if(rCore.IsKeyDown(KEY_W)){
-            y += -1f * getSpeed();
+//    private void VerticalMove(){
+//        Vector2 new_pos = new Vector2();
+//        float x = getPos().getX();
+//        float y = getPos().getY();
+//        if(rCore.IsKeyDown(KEY_W)){
+//            y += -1f * getSpeed();
+//        }
+//        if(rCore.IsKeyDown(KEY_S)){
+//            y += 1 * getSpeed();
+//        }
+//        new_pos.setY(y);
+//        new_pos.setX(getPos().x);
+//        if(!inCollision(new_pos))
+//            setPos(new_pos);
+//    }
+//
+//    private void HorizontalMove(){
+//        Vector2 new_pos = new Vector2();
+//        float x = getPos().getX();
+//        float y = getPos().getY();
+//
+//        if(rCore.IsKeyDown(KEY_A)){
+//            x += -1f * getSpeed();
+//        }
+//        if(rCore.IsKeyDown(KEY_D)){
+//            x += 1 * getSpeed();
+//        }
+//        new_pos.setX(x);
+//        new_pos.setY(getPos().y);
+//        if(!inCollision(new_pos))
+//            setPos(new_pos);
+//    }
+
+    private void computeMoveGrid(){
+        Position playerPos = getWorldPos();
+        moveMap = new HashMap<>();
+        for(int y = -moveSpeed; y <= moveSpeed; y++){
+            for(int x= -moveSpeed; x <= moveSpeed; x++){
+                Position possibleMove = playerPos.add(new Position(x, y));
+                Boolean solid = false;
+                if(getWorld().GetTile(possibleMove).hasCollider())
+                    solid = true;
+                moveMap.put(possibleMove, solid);
+            }
         }
-        if(rCore.IsKeyDown(KEY_S)){
-            y += 1 * getSpeed();
-        }
-        new_pos.setY(y);
-        new_pos.setX(getPos().x);
-        if(!inCollision(new_pos))
-            setPos(new_pos);
+
+        inMove = true;
+
     }
 
-    private void HorizontalMove(){
-        Vector2 new_pos = new Vector2();
-        float x = getPos().getX();
-        float y = getPos().getY();
+    private void drawMoveSquares(){
+        Position playerPos = getWorldPos();
+        Rectangle rect = new Rectangle(
+                (float)2 * EngineConstants.SPRITE_SIZE,
+                (float)2 * EngineConstants.SPRITE_SIZE,
+                (float) EngineConstants.SPRITE_SIZE, (float) EngineConstants.SPRITE_SIZE);
 
-        if(rCore.IsKeyDown(KEY_A)){
-            x += -1f * getSpeed();
+        for (Position position : moveMap.keySet()) {
+            Color color = Color.GREEN;
+                if(moveMap.get(position))
+                    color = Color.RED;
+                getRaylib().textures.DrawTextureRec(getTexture(), rect, Position.toScreenPosition(position), color);
         }
-        if(rCore.IsKeyDown(KEY_D)){
-            x += 1 * getSpeed();
-        }
-        new_pos.setX(x);
-        new_pos.setY(getPos().y);
-        if(!inCollision(new_pos))
-            setPos(new_pos);
     }
-
     private void MouseClick(){
-        Position tPos = getMouseClickPosition();
+        if(rCore.IsMouseButtonDown(0)){
+            if(!inMove){
+                computeMoveGrid();
+            }
+            drawMoveGrid = true;
+        }
+        if(getRaylib().core.IsMouseButtonReleased(0)){
+          nav.findPath(Position.toWorldPosition(getPos()), getMouseClickPosition(),moveMap);
+            System.out.println(Arrays.toString(nav.path.toArray()));
 
-        if(rCore.IsMouseButtonDown(0)) {
-            Tile t = getWorld().GetTile(tPos);
-            Tile newT;
-            if (t instanceof Breakable) {
-                Breakable breakable = (Breakable) t;
-                newT = breakable.BreakBlock();
-                getWorld().SetTile(tPos, newT.getTileId());
-            }
-        }else if(rCore.IsMouseButtonDown(1)){
-            Tile t = getWorld().GetTile(tPos);
-            // TODO make the tile placed player selectable
-            if(!(t instanceof Breakable)){
-              getWorld().SetTile(tPos, Tile.WOODEN_PLACK_TILE.getTileId());
-            }
+            Position tPos = getMouseClickPosition();
+            move(tPos);
         }
     }
 
@@ -158,7 +206,16 @@ public class PlayerEntity extends Entity{
         uiHotBar.setItems(hotbarItems);
         updateHotBar();
         MouseClick();
-        move();
+        //move();
     }
 
+    @Override
+    public void draw(Raylib raylib) {
+        if(drawMoveGrid){
+            drawMoveSquares();
+            drawMoveGrid = false;
+        }
+        super.draw(raylib);
+
+    }
 }
