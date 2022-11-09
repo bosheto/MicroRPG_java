@@ -162,11 +162,10 @@ public class PlayerEntity extends Entity{
             drawMoveGrid = true;
         }
         if(getRaylib().core.IsMouseButtonReleased(0)){
-          nav.findPath(Position.toWorldPosition(getPos()), getMouseClickPosition(),moveMap);
-            System.out.println(Arrays.toString(nav.path.toArray()));
-
-            Position tPos = getMouseClickPosition();
-            move(tPos);
+          List<Position> e = nav.findPath(Position.toWorldPosition(getPos()), getMouseClickPosition(), moveMap, moveSpeed);
+//          System.out.println(Arrays.toString(e.toArray()));
+          Position tPos = getMouseClickPosition();
+          move(tPos);
         }
     }
 

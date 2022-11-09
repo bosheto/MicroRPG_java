@@ -7,14 +7,14 @@ import java.util.*;
 
 public class A_Star {
 
-    public List<Position> path = new ArrayList<>();
 
-    public void findPath(Position startPosition, Position targetPosition, HashMap<Position, Boolean> searchSpace){
+    public List<Position> findPath(Position startPosition, Position targetPosition, HashMap<Position, Boolean> searchSpace, int size){
         List<Node> openSet = new ArrayList<>();
+        Node[][] grid = initializeGrid(size, searchSpace);
         HashSet<Node> closedSet = new HashSet<>();
-        Node startNode = new Node(true, startPosition);
-        Node targetNode = new Node(true, targetPosition);
-
+        Node startNode = getNodeFromWorldPos(startPosition, grid);
+        Node targetNode = getNodeFromWorldPos(targetPosition, grid);
+        List<Position> path = new ArrayList<>();
         openSet.add(startNode);
 
         while(openSet.size() > 0){
@@ -32,7 +32,7 @@ public class A_Star {
 
             if(currentNode == targetNode){
                 path = retracePath(startNode, targetNode);
-                return;
+                break;
             }
 
             for (Node neighbour : getNeighbours(currentNode.position, searchSpace)) {
@@ -50,6 +50,40 @@ public class A_Star {
                 }
             }
         }
+        return path;
+    }
+
+    private Node[][] initializeGrid(int size, HashMap<Position, Boolean> map){
+       Node[][] grid = new Node[size+1][size+1];
+       for(int y = 0; y < size +1; y ++){
+           for(int x = 0; x < size + 1; x++){
+               grid[y][x] = getNodeForGrid(map, x, y, size);
+           }
+       }
+       return grid;
+    }
+
+    private Node getNodeFromWorldPos(Position worldPos, Node[][] grid){
+        for(int y = 0; y < grid.length; y++){
+            for(int x = 0; x < grid.length; x++){
+                Node c = grid[x][y];
+                if(c.position.equals(worldPos))
+                    return c;
+            }
+        }
+        throw new IllegalArgumentException("ERROR NO NODE WITH POS ");
+    }
+
+    private Node getNodeForGrid(HashMap<Position, Boolean> map, int x, int y, int size){
+        Node node = new Node();
+        int posX = -size + x;
+        int posY = -size + y;
+        Position worldPos = new Position(posX, posY);
+        node.position = worldPos;
+        node.walkable = map.get(worldPos);
+        node.gridX = x;
+        node.gridY = y;
+        return node;
     }
 
     private int getDistance(Node a, Node b){
@@ -58,8 +92,7 @@ public class A_Star {
 
         if(distX > distY)
             return 14 * distY + 10 * (distX - distY);
-        else
-            return 14 * distX + 10 * (distY - distX);
+        return 14 * distX + 10 * (distY - distX);
 
     }
 
@@ -99,10 +132,13 @@ public class A_Star {
 
 }
 
-class Node{
+class Node {
     Node parent;
     public boolean walkable;
     Position position;
+
+    public int gridX;
+    public int gridY;
 
     public int g = 0;
     public int h = 0;
@@ -111,9 +147,12 @@ class Node{
         return g + h;
     }
 
-    public Node(boolean walkable, Position position){
+    public Node(boolean walkable, Position position) {
         this.walkable = walkable;
         this.position = position;
     }
+
+    public Node(){}
+
 
 }
