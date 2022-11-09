@@ -3,9 +3,9 @@ package com.microrpg;
 import com.microrpg.entity.PlayerEntity;
 
 import com.microrpg.ui.HotBar;
-import com.microrpg.ui.UiManager;
-import com.microrpg.world.Overworld;
 
+import com.microrpg.world.Position;
+import com.microrpg.world.World;
 import com.raylib.java.Raylib;
 import com.raylib.java.core.Color;
 import com.raylib.java.core.camera.Camera2D;
@@ -17,7 +17,6 @@ import com.raylib.java.textures.rTextures;
 import com.microrpg.constants.EngineConstants;
 
 import static java.lang.String.format;
-import static com.raylib.java.core.input.Keyboard.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -38,15 +37,16 @@ public class Main {
         Image itemsImage = rTextures.LoadImage("src/assets/ItemsSpriteSheet.png");
         Texture2D itemsTexture = rTextures.LoadTextureFromImage(itemsImage);
 
+        World world = new World(texture, raylib);
 
         // Entity and world creation
         //Generate world;
-        Overworld world = new Overworld(texture, 12345, raylib);
-        PlayerEntity player = new PlayerEntity(new Vector2(0, 0), world, raylib, texture);
+//        Overworld world = new Overworld(texture, 12345, raylib);
+        PlayerEntity player = new PlayerEntity(Position.toScreenPosition(new Position(32, 32)), world, raylib, texture);
 
-        world.setPlayerPosition(player.getPos());
+//        world.setPlayerPosition(player.getPos());
 
-        //Camera
+//        Camera
         Camera2D camera = new Camera2D();
         camera.target = player.getPos();
         camera.offset = new Vector2((float)SCREEN_WIDTH / 2f, (float)SCREEN_HEIGHT / 2f);
@@ -62,7 +62,7 @@ public class Main {
 
             // Update variables here
             player.Update();
-            world.Update(player.getPos());
+//            world.Update(player.getPos());
             camera.target = player.getPos();
 
             // Draw here
@@ -73,8 +73,8 @@ public class Main {
             raylib.core.BeginMode2D(camera);
 
             //User draw calls
-
             world.draw();
+//            world.draw();
             player.draw(raylib);
 
             // Draw FPS counter

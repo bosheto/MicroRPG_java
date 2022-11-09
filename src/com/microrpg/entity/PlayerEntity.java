@@ -9,6 +9,7 @@ import com.microrpg.utils.A_Star;
 import com.microrpg.world.Overworld;
 
 import com.microrpg.world.Position;
+import com.microrpg.world.World;
 import com.microrpg.world.contracts.Breakable;
 import com.microrpg.world.tiles.Tile;
 import com.raylib.java.Raylib;
@@ -19,6 +20,7 @@ import com.raylib.java.shapes.Rectangle;
 import com.raylib.java.textures.Texture2D;
 
 import java.io.PipedOutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -41,33 +43,18 @@ public class PlayerEntity extends Entity{
 
     HashMap<Position, Boolean> moveMap;
 
-    A_Star nav;
+    private A_Star nav;
 
-    public PlayerEntity(Vector2 pos, Overworld world, Raylib raylib, Texture2D texture) {
+    List<Position> path = new ArrayList<>();
+
+    public PlayerEntity(Vector2 pos, World world, Raylib raylib, Texture2D texture) {
         super(pos, 10, 4f, 0, 1, world, raylib, texture);
         setCollider(new AABB(0,0,1,1));
-        nav = new A_Star();
+        nav = new A_Star(world);
     }
 
     public void setUiHotBar(HotBar uiHotBar) {
         this.uiHotBar = uiHotBar;
-    }
-
-
-    private boolean inCollision(Vector2 pos){
-        Vector2 tempPos = new Vector2(pos.x, pos.y);
-        float feather = 1;
-        float offset = (EngineConstants.SPRITE_SIZE - feather)/2.0f ;
-
-        if(pos.getX() < getPos().getX())
-            tempPos.setX(pos.x - offset);
-        if(pos.getX() > getPos().getX())
-            tempPos.setX(pos.x + offset);
-        if(pos.getY() > getPos().getY())
-            tempPos.setY(pos.y + offset);
-        if(pos.getY() < getPos().getY())
-            tempPos.setY(pos.y - offset);
-        return getWorld().GetTile(Position.toWorldPosition(tempPos)).hasCollider();
     }
 
 
@@ -129,7 +116,9 @@ public class PlayerEntity extends Entity{
         for(int y = -moveSpeed; y <= moveSpeed; y++){
             for(int x= -moveSpeed; x <= moveSpeed; x++){
                 Position possibleMove = playerPos.add(new Position(x, y));
-                Boolean solid = false;
+                boolean solid = false;
+                if(!getWorld().inWorld(possibleMove))
+                    continue;
                 if(getWorld().GetTile(possibleMove).hasCollider())
                     solid = true;
                 moveMap.put(possibleMove, solid);
@@ -151,6 +140,8 @@ public class PlayerEntity extends Entity{
             Color color = Color.GREEN;
                 if(moveMap.get(position))
                     color = Color.RED;
+                if(path.contains(position))
+                    color = Color.BLUE;
                 getRaylib().textures.DrawTextureRec(getTexture(), rect, Position.toScreenPosition(position), color);
         }
     }
@@ -159,13 +150,15 @@ public class PlayerEntity extends Entity{
             if(!inMove){
                 computeMoveGrid();
             }
+            Position tPos = getMouseClickPosition();
+            if(moveMap.containsKey(tPos))
+                path = nav.findPath(getWorldPos(), tPos);
             drawMoveGrid = true;
         }
         if(getRaylib().core.IsMouseButtonReleased(0)){
-          List<Position> e = nav.findPath(Position.toWorldPosition(getPos()), getMouseClickPosition(), moveMap, moveSpeed);
-//          System.out.println(Arrays.toString(e.toArray()));
           Position tPos = getMouseClickPosition();
-          move(tPos);
+
+            move(tPos);
         }
     }
 

@@ -1,6 +1,8 @@
 package com.microrpg.utils;
 
+import com.microrpg.world.Overworld;
 import com.microrpg.world.Position;
+import com.microrpg.world.World;
 
 import java.io.PipedOutputStream;
 import java.util.*;
@@ -8,12 +10,24 @@ import java.util.*;
 public class A_Star {
 
 
-    public List<Position> findPath(Position startPosition, Position targetPosition, HashMap<Position, Boolean> searchSpace, int size){
+
+    private World world;
+    private Grid navGrid;
+
+    public A_Star(World world){
+        this.world = world;
+        navGrid = new Grid(world);
+    }
+
+
+    public List<Position> findPath(Position startPosition, Position targetPosition){
+
         List<Node> openSet = new ArrayList<>();
-        Node[][] grid = initializeGrid(size, searchSpace);
         HashSet<Node> closedSet = new HashSet<>();
-        Node startNode = getNodeFromWorldPos(startPosition, grid);
-        Node targetNode = getNodeFromWorldPos(targetPosition, grid);
+
+        Node startNode = navGrid.getNode(startPosition);
+        Node targetNode = navGrid.getNode(targetPosition);
+
         List<Position> path = new ArrayList<>();
         openSet.add(startNode);
 
@@ -35,7 +49,7 @@ public class A_Star {
                 break;
             }
 
-            for (Node neighbour : getNeighbours(currentNode.position, searchSpace)) {
+            for (Node neighbour : getNeighbours(currentNode.getPosition())) {
                 if(!neighbour.walkable || closedSet.contains(neighbour))
                     continue;
 
@@ -53,42 +67,9 @@ public class A_Star {
         return path;
     }
 
-    private Node[][] initializeGrid(int size, HashMap<Position, Boolean> map){
-       Node[][] grid = new Node[size+1][size+1];
-       for(int y = 0; y < size +1; y ++){
-           for(int x = 0; x < size + 1; x++){
-               grid[y][x] = getNodeForGrid(map, x, y, size);
-           }
-       }
-       return grid;
-    }
-
-    private Node getNodeFromWorldPos(Position worldPos, Node[][] grid){
-        for(int y = 0; y < grid.length; y++){
-            for(int x = 0; x < grid.length; x++){
-                Node c = grid[x][y];
-                if(c.position.equals(worldPos))
-                    return c;
-            }
-        }
-        throw new IllegalArgumentException("ERROR NO NODE WITH POS ");
-    }
-
-    private Node getNodeForGrid(HashMap<Position, Boolean> map, int x, int y, int size){
-        Node node = new Node();
-        int posX = -size + x;
-        int posY = -size + y;
-        Position worldPos = new Position(posX, posY);
-        node.position = worldPos;
-        node.walkable = map.get(worldPos);
-        node.gridX = x;
-        node.gridY = y;
-        return node;
-    }
-
     private int getDistance(Node a, Node b){
-        int distX = Math.abs(a.position.getX() - b.position.getX());
-        int distY = Math.abs(a.position.getY() - b.position.getY());
+        int distX = Math.abs(a.getPosition().getX() - b.getPosition().getX());
+        int distY = Math.abs(a.getPosition().getY() - b.getPosition().getY());
 
         if(distX > distY)
             return 14 * distY + 10 * (distX - distY);
@@ -96,7 +77,7 @@ public class A_Star {
 
     }
 
-    private List<Node> getNeighbours(Position position, HashMap<Position, Boolean> searchSpace){
+    private List<Node> getNeighbours(Position position){
         List<Node> neighbours = new ArrayList<>();
         Position[] neighbourPosition = {
                 new Position(0,-1),
@@ -111,8 +92,8 @@ public class A_Star {
 
         for (Position nPos : neighbourPosition) {
             Position testPosition = position.add(nPos);
-            if(searchSpace.containsKey(testPosition) && searchSpace.get(testPosition))
-                neighbours.add(new Node(searchSpace.get(testPosition), testPosition));
+            if(navGrid.containsPosition(testPosition))
+                neighbours.add(navGrid.getNode(testPosition));
 
         }
 
@@ -123,7 +104,7 @@ public class A_Star {
         List<Position> path = new ArrayList<>();
         Node currentNode = endNode;
         while(currentNode != startNode){
-            path.add(currentNode.position);
+            path.add(currentNode.getPosition());
             currentNode = currentNode.parent;
         }
        Collections.reverse(path);
@@ -132,10 +113,50 @@ public class A_Star {
 
 }
 
+class Grid{
+
+    World world;
+
+    Node[][] nodes;
+
+    public Grid(World world) {
+        this.world = world;
+        initGrid();
+    }
+
+    private void initGrid(){
+        nodes = new Node[world.getySize()][world.getxSize()];
+        for(int y = 0; y < world.getySize(); y++){
+            for(int x = 0; x < world.getxSize(); x++){
+                nodes[y][x] = createNodeFromPos(x, y);
+            }
+        }
+    }
+
+    private Node createNodeFromPos(int x, int y){
+        Node node = new Node();
+        node.gridX = x;
+        node.gridY = y;
+        node.walkable = !world.GetTile(new Position(x, y)).hasCollider();
+        return node;
+    }
+
+    public Node getNode(Position pos){
+
+        return nodes[pos.getY()][pos.getX()];
+    }
+
+    public boolean containsPosition(Position pos){
+        if(pos.getX() < 0 || pos.getX() > nodes[0].length)
+            return false;
+        return pos.getY() > 0 && pos.getY() < nodes.length;
+    }
+}
+
 class Node {
     Node parent;
     public boolean walkable;
-    Position position;
+    private Position position;
 
     public int gridX;
     public int gridY;
@@ -145,6 +166,10 @@ class Node {
 
     public int getF() {
         return g + h;
+    }
+
+    public Position getPosition() {
+        return new Position(gridX, gridY);
     }
 
     public Node(boolean walkable, Position position) {

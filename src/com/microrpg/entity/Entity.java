@@ -4,6 +4,7 @@ import com.microrpg.constants.EngineConstants;
 import com.microrpg.utils.AABB;
 import com.microrpg.world.Overworld;
 import com.microrpg.world.Position;
+import com.microrpg.world.World;
 import com.raylib.java.Raylib;
 import com.raylib.java.core.Color;
 import com.raylib.java.raymath.Vector2;
@@ -19,7 +20,7 @@ public abstract class Entity {
     private int tile_x;
     private int tile_y;
 
-    private Overworld world;
+    private World world;
     private boolean hasCollision;
     private AABB collider;
 
@@ -31,7 +32,7 @@ public abstract class Entity {
         return texture;
     }
 
-    public Entity(Vector2 pos, int hp, float speed, int tile_x, int tile_y, Overworld world, Raylib raylib, Texture2D texture) {
+    public Entity(Vector2 pos, int hp, float speed, int tile_x, int tile_y, World world, Raylib raylib, Texture2D texture) {
         this.hp = hp;
         this.speed = speed;
         this.pos = pos;
@@ -63,7 +64,7 @@ public abstract class Entity {
         collider.maxY = EngineConstants.SPRITE_SIZE;
     }
 
-    public Overworld getWorld() {
+    public World getWorld() {
         return world;
     }
 

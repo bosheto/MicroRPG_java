@@ -95,4 +95,7 @@ public class Chunk {
         }
     }
 
+    public Position getPos() {
+        return pos;
+    }
 }
