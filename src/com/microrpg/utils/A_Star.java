@@ -142,12 +142,13 @@ class Grid{
     }
 
     public Node getNode(Position pos){
-
-        return nodes[pos.getY()][pos.getX()];
+        if(containsPosition(pos))
+            return nodes[pos.getY()][pos.getX()];
+        return new Node();
     }
 
     public boolean containsPosition(Position pos){
-        if(pos.getX() < 0 || pos.getX() > nodes[0].length)
+        if(pos.getX() < 0 || pos.getX() >= nodes[0].length)
             return false;
         return pos.getY() > 0 && pos.getY() < nodes.length;
     }

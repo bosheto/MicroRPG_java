@@ -57,7 +57,6 @@ public class PlayerEntity extends Entity{
         this.uiHotBar = uiHotBar;
     }
 
-
     public void move(Position pos) {
         if(moveMap.containsKey(pos) && !moveMap.get(pos)){
             setPos(Position.toScreenPosition(pos));
@@ -77,39 +76,6 @@ public class PlayerEntity extends Entity{
         return getWorldPos().add(pos);
     }
 
-//    private void VerticalMove(){
-//        Vector2 new_pos = new Vector2();
-//        float x = getPos().getX();
-//        float y = getPos().getY();
-//        if(rCore.IsKeyDown(KEY_W)){
-//            y += -1f * getSpeed();
-//        }
-//        if(rCore.IsKeyDown(KEY_S)){
-//            y += 1 * getSpeed();
-//        }
-//        new_pos.setY(y);
-//        new_pos.setX(getPos().x);
-//        if(!inCollision(new_pos))
-//            setPos(new_pos);
-//    }
-//
-//    private void HorizontalMove(){
-//        Vector2 new_pos = new Vector2();
-//        float x = getPos().getX();
-//        float y = getPos().getY();
-//
-//        if(rCore.IsKeyDown(KEY_A)){
-//            x += -1f * getSpeed();
-//        }
-//        if(rCore.IsKeyDown(KEY_D)){
-//            x += 1 * getSpeed();
-//        }
-//        new_pos.setX(x);
-//        new_pos.setY(getPos().y);
-//        if(!inCollision(new_pos))
-//            setPos(new_pos);
-//    }
-
     private void computeMoveGrid(){
         Position playerPos = getWorldPos();
         moveMap = new HashMap<>();
@@ -124,9 +90,7 @@ public class PlayerEntity extends Entity{
                 moveMap.put(possibleMove, solid);
             }
         }
-
         inMove = true;
-
     }
 
     private void drawMoveSquares(){
